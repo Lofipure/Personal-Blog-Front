@@ -1,9 +1,9 @@
-import React from 'react';
+import React from "react";
 import Head from "next/head";
-import Header from "../Components/Header";
 import { Row, Col } from "antd";
+import Header from "../components/Header";
 
-const Home = () => {
+const List = () => {
   return (
     <React.Fragment>
       <Head>
@@ -19,7 +19,6 @@ const Home = () => {
         </Col>
       </Row>
     </React.Fragment>
-  )
-}
-
-export default Home;
+  );
+};
+export default List;
