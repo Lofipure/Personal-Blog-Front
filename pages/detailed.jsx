@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import Head from "next/head";
 import { Row, Col, Breadcrumb, Affix } from "antd";
-import ReactMarkdown from "react-markdown";
+import highlightjs from "highlight.js";
+import marked from "marked";
 import MarkNav from "markdown-navbar";
 
 import { CalendarOutlined } from "@ant-design/icons";
@@ -13,7 +14,9 @@ import Footer from "../Components/Footer";
 
 import "markdown-navbar/dist/navbar.css";
 import "../styles/Pages/detailed.css";
-const Detailed = () => {
+import "highlight.js/styles/monokai-sublime.css";
+
+const Detailed = (props) => {
   let markdown =
     "# P01:课程介绍和环境搭建\n" +
     "[ **M** ] arkdown + E [ **ditor** ] = **Mditor**  \n" +
@@ -49,6 +52,20 @@ const Detailed = () => {
     ">> bbbbbbbbb\n" +
     ">>> cccccccccc\n\n" +
     "``` var a=11; ```";
+
+  const render = new marked.Renderer();
+  marked.setOptions({
+    renderer: render,
+    gfm: true,
+    pedantic: false,
+    sanitize: false,
+    tables: true,
+    breaks: false,
+    smartLists: true,
+    smartypants: false,
+    highlight: (code) => highlightjs.highlightAuto(code).value,
+  });
+  let html = marked(markdown);
   return (
     <React.Fragment>
       <Head>
@@ -77,11 +94,14 @@ const Detailed = () => {
                   <CalendarOutlined /> 2020-9-15
                 </span>
               </div>
-              <div className="detailed-content">
-                <ReactMarkdown
+              <div
+                className="detailed-content"
+                dangerouslySetInnerHTML={{ __html: html }}
+              >
+                {/* <ReactMarkdown
                   source={markdown}
                   escapeHtml={false}
-                ></ReactMarkdown>
+                ></ReactMarkdown> */}
               </div>
             </div>
           </div>
