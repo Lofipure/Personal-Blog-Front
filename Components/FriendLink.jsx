@@ -1,10 +1,10 @@
 import "../styles/Components/friendLink.css";
-
+import Kcsoft from "./Kcsoft";
 const FriendLink = () => {
   return (
-    <div className="fr-div">
-      <div>广告位：旺铺招租</div>
-    </div>
+    <div className="fr-div">{/* <div>
+        <Kcsoft />
+      </div> */}</div>
   );
 };
 

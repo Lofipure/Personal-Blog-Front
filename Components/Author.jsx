@@ -11,7 +11,12 @@ const Author = () => {
         ></Avatar>
       </div>
       <div className="author-introduction">
-        Lofipure, Xust-student
+        <span className="author-name">Lofipure</span>
+        <br />
+        就读于{" "}
+        <span className="author-education">
+          <a href="https://www.xust.edu.cn/">西安科技大学</a>
+        </span>
         <Divider>社交账号</Divider>
         <Avatar
           size={28}

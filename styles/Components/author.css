@@ -1,6 +1,10 @@
 .author-div {
   text-align: center;
   padding: 1rem;
+  background-color: #fff;
+  margin-left: 0.6rem;
+  margin-bottom: 0.5rem;
+  border-radius: 0.4rem;
 }
 .author-div div {
   margin-bottom: 1rem;
@@ -13,4 +17,10 @@
   background-color: #999;
   margin-left: 0.5rem;
   margin-right: 0.5rem;
+}
+.author-education {
+  color: blue;
+}
+.author-name {
+  font-size: 1.1rem;
 }

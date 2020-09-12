@@ -1,39 +1,44 @@
-import { Row, Col, List, Icon } from "antd";
+import { Row, Col, List, PageHeader } from "antd";
 import Head from "next/head";
 import Header from "../Components/Header";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { CalendarOutlined, FireOutlined } from "@ant-design/icons"
 import "../styles/Pages/index.css";
 import Author from "../Components/Author";
 import FriendLink from "../Components/FriendLink";
 import Footer from "../Components/Footer";
+import axios from "axios";
+import Link from "next/link";
 
-const Home = () => {
-  const [list, setList] = useState([
-    { title: "One", context: "contextOne" },
-    { title: "Two", context: "contenxtTwo" },
-    { title: "Three", context: "contextThree" },
-  ]);
+const Home = (list) => {
+  const [myList, setmyList] = useState(list.data);
+  useEffect(() => {
+    console.log(list);
+  })
   return (
     <React.Fragment>
       <Head>
-        <title>Home</title>
+        <title>Lofipure's Blog</title>
       </Head>
       <Header />
       <Row className="comm-main" type="flex" justify="center">
         <Col className="comm-left" xs={24} sm={24} md={16} lg={18} xl={14}>
           <List
-            header={<div>最新博客</div>}
+            header={<h3>Blog List</h3>}
             itemLayout="vertical"
-            dataSource={list}
+            dataSource={myList}
             renderItem={(item) => (
               <List.Item>
-                <div className="list-title">{item.title}</div>
-                <div className="list-icon">
-                  <span><CalendarOutlined />2020-9-10</span>
-                  <span><FireOutlined /> 321</span>
+                <div className="list-title">
+                  <Link href={{ pathname: '/detailed', query: { id: item.id } }}>
+                    <a>{item.title}</a>
+                  </Link>
                 </div>
-                <div className="list-context">{item.context}</div>
+                <div className="list-icon">
+                  <span><CalendarOutlined />{item.add_time}</span>
+                  <span><FireOutlined />{item.view_count}</span>
+                </div>
+                <div className="list-context">{item.introduce}</div>
               </List.Item>
             )}
           ></List>
@@ -47,5 +52,12 @@ const Home = () => {
     </React.Fragment>
   )
 }
-
+Home.getInitialProps = async () => {
+  const promise = new Promise((resolve) => {
+    axios("http://localhost:4044/default/getArticleList").then((res) => {
+      resolve(res.data)
+    })
+  })
+  return await promise;
+}
 export default Home;

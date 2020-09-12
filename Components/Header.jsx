@@ -11,18 +11,7 @@ const Header = () => {
           <span className="header-logo">Lofipure's Blog</span>
           <span className="header-txt">万年太久，只做朝夕。</span>
         </Col>
-
-        <Col className="menu-div" xs={0} sm={0} md={14} lg={8} xl={6}>
-          <Menu mode="horizontal">
-            <Menu.Item>
-              <a href="/">首页</a>
-            </Menu.Item>
-            <Menu.Item>
-              <a href="/list">文章列表</a>
-            </Menu.Item>
-            <Menu.Item>关于作者</Menu.Item>
-          </Menu>
-        </Col>
+        <Col className="menu-div" xs={0} sm={0} md={14} lg={8} xl={6}></Col>
       </Row>
     </div>
   );
