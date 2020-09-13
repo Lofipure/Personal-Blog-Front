@@ -19,7 +19,7 @@ import "../styles/Pages/detailed.css";
 import "highlight.js/styles/monokai-sublime.css";
 
 const Detailed = (props) => {
-  let articleContent = props.article_content;
+  let articleContent = props.articleContent;
   const render = new marked.Renderer();
   marked.setOptions({
     renderer: render,
@@ -56,7 +56,7 @@ const Detailed = (props) => {
               <div className="detailed-title">{props.title}</div>
               <div className="list-icon center">
                 <span>
-                  <CalendarOutlined /> {props.add_time}
+                  <CalendarOutlined /> {props.addTime}
                 </span>
               </div>
               <div
@@ -93,7 +93,14 @@ Detailed.getInitialProps = async (context) => {
   const promise = new Promise((resolve) => {
     axios("http://127.0.0.1:4044/default/getArticleById?id=" + id).then(
       (res) => {
-        resolve(res.data.data[0]);
+        let data = res.data.data[0];
+        console.log(data);
+        let content = data.articleContent;
+        content = content.replace(/<nextLine>/g, "\n");
+        content = content.replace(/<space>/g, " ");
+        content = content.replace(/<doubleFlag>/g, '"');
+        data.articleContent = content;
+        resolve(data);
       }
     );
   });
