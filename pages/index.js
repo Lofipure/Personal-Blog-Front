@@ -1,11 +1,10 @@
-import { Row, Col, List, PageHeader } from "antd";
+import { Row, Col, List, Tag } from "antd";
 import Head from "next/head";
 import Header from "../Components/Header";
 import React, { useState, useEffect } from 'react';
 import { CalendarOutlined, FireOutlined } from "@ant-design/icons"
 import "../styles/Pages/index.css";
 import Author from "../Components/Author";
-import FriendLink from "../Components/FriendLink";
 import Footer from "../Components/Footer";
 import axios from "axios";
 import Link from "next/link";
@@ -15,6 +14,12 @@ import "highlight.js/styles/monokai-sublime.css";
 
 const Home = (list) => {
   const [myList, setmyList] = useState(list.data);
+
+  let tags = [];
+  myList.forEach((item) => {
+    tags.push(item.tags.split(","));
+  });
+
   const render = new marked.Renderer();
   marked.setOptions({
     renderer: render,
@@ -39,7 +44,7 @@ const Home = (list) => {
             header={<h3>Blog List</h3>}
             itemLayout="vertical"
             dataSource={myList}
-            renderItem={(item) => {
+            renderItem={(item, index) => {
               let html = marked(item.articleIntroduce);
               return (
                 <List.Item>
@@ -48,9 +53,14 @@ const Home = (list) => {
                       <a>{item.title}</a>
                     </Link>
                   </div>
-                  <div className="list-icon">
+                  <span className="list-icon">
                     <span><CalendarOutlined />{item.addTime}</span>
-                  </div>
+                  </span>
+                  <span className="list-tags">{
+                    tags[index].map((ele, i) => {
+                      return <Tag color="blue" key={i}>{ele}</Tag>
+                    })
+                  }</span>
                   <div className="list-context" dangerouslySetInnerHTML={{ __html: html }}></div>
                 </List.Item>
               )
@@ -59,7 +69,6 @@ const Home = (list) => {
         </Col>
         <Col className="comm-right" xs={0} sm={0} md={7} lg={5} xl={4}>
           <Author />
-          <FriendLink />
         </Col>
       </Row>
       <Footer />

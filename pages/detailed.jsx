@@ -11,7 +11,6 @@ import { CalendarOutlined, ArrowLeftOutlined } from "@ant-design/icons";
 
 import Header from "../Components/Header";
 import Author from "../Components/Author";
-import FriendLink from "../Components/FriendLink";
 import Footer from "../Components/Footer";
 
 import "markdown-navbar/dist/navbar.css";
@@ -68,7 +67,6 @@ const Detailed = (props) => {
         </Col>
 
         <Col className="comm-right" xs={0} sm={0} md={7} lg={5} xl={4}>
-          <FriendLink />
           <Author />
           <Affix offsetTop={5}>
             <div className="detailed-nav comm-box">
@@ -88,16 +86,12 @@ const Detailed = (props) => {
 };
 
 Detailed.getInitialProps = async (context) => {
-  console.log(context.query.id);
   let id = context.query.id;
   const promise = new Promise((resolve) => {
     axios("http://127.0.0.1:4044/default/getArticleById?id=" + id).then(
       (res) => {
         let data = res.data.data[0];
-        console.log(data);
         let content = data.articleContent;
-        content = content.replace(/<nextLine>/g, "\n");
-        content = content.replace(/<space>/g, " ");
         content = content.replace(/<doubleFlag>/g, '"');
         data.articleContent = content;
         resolve(data);
